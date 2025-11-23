@@ -7,7 +7,8 @@ export default new class NyaaSi extends AbstractSource {
   async single({ titles, episode }) {
     if (!titles?.length) return []
 
-    throw new Error(titles)
+    console.log("wassup?")
+    console.log(titles)
     const query = this.buildQuery(titles[0], episode)
     const url = `${this.base}${encodeURIComponent(query)}`
 
