@@ -7,12 +7,15 @@ export default new class NyaaSi extends AbstractSource {
   async single({ titles, episode }) {
     if (!titles?.length) return []
 
-    const title = this.fixTitle(titles[0])
-    const query = this.buildQuery(title, episode)
-    const url = `${this.base}${encodeURIComponent(query)}`
+    let data = []
 
-    const res = await fetch(url)
-    const data = await res.json()
+    for (int i = 0; i < titles.length; i++){
+      let title = this.fixTitle(titles[i])
+      let query = this.buildQuery(title, episode)
+      let url = `${this.base}${encodeURIComponent(query)}`
+      let res = await fetch(url)
+      data.append(await res.json())
+    }
 
     if (!Array.isArray(data)) return []
 
