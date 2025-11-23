@@ -29,7 +29,6 @@ export default new class NyaaSi extends AbstractSource {
         return title.replace(/(\d)(?:nd|rd|th) Season/i, `S${match1[1]}`)
       }
     }
-  }
 
   /** @type {import('./').SearchFunction} */
   batch = this.single
