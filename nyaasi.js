@@ -7,9 +7,8 @@ export default new class NyaaSi extends AbstractSource {
   async single({ titles, episode }) {
     if (!titles?.length) return []
 
-    console.log("wassup?")
-    console.log(titles)
-    const query = this.buildQuery(titles[0], episode)
+    const title = this.fixTitle(titles[0])
+    const query = this.buildQuery(title, episode)
     const url = `${this.base}${encodeURIComponent(query)}`
 
     const res = await fetch(url)
@@ -18,6 +17,18 @@ export default new class NyaaSi extends AbstractSource {
     if (!Array.isArray(data)) return []
 
     return this.map(data)
+  }
+
+  fixTitle(title){
+    const match1 = title.match(/(\d)(?:nd|rd|th) Season/i)
+      const match2 = title.match(/Season (\d)/i)
+
+      if (match2) {
+        return title.replace(/Season \d/i, `S${match2[1]}`)
+      } else if (match1) {
+        return title.replace(/(\d)(?:nd|rd|th) Season/i, `S${match1[1]}`)
+      }
+    }
   }
 
   /** @type {import('./').SearchFunction} */
